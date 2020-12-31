@@ -2,7 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Domain\Exceptions\ModelNotFoundException;
+use App\Domain\Exceptions\User\UserAlreadyExistsException;
+use DomainException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use InvalidArgumentException;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,5 +42,27 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        $response = ['message' => $e->getMessage()];
+
+        if ($e instanceof InvalidArgumentException) {
+            $response['status_code'] = Response::HTTP_BAD_REQUEST;
+            return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($e instanceof DomainException) {
+            $response['status_code'] = Response::HTTP_UNPROCESSABLE_ENTITY;
+            return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        if ($e instanceof ModelNotFoundException) {
+            $response['status_code'] = Response::HTTP_NOT_FOUND;
+            return new JsonResponse($response, Response::HTTP_NOT_FOUND);
+        }
+
+        return parent::render($request, $e);
     }
 }

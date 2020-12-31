@@ -1,0 +1,7 @@
+App\Domain\ValueObjects\User\Email:
+  type: embeddable
+  fields:
+    value:
+      type: string
+      column: email
+      unique: true

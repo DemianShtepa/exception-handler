@@ -1,5 +1,8 @@
 <?php
 
+use App\Providers\PasswordHasherProvider;
+use App\Providers\RepositoryServiceProvider;
+
 return [
 
     /*
@@ -176,6 +179,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         LaravelDoctrine\ORM\DoctrineServiceProvider::class,
         LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
+        RepositoryServiceProvider::class,
+        PasswordHasherProvider::class
     ],
 
     /*
