@@ -29,4 +29,37 @@ class RegistrationTest extends TestCase
 
         $response->assertStatus(201);
     }
+
+    public function testFailedName(): void
+    {
+        $response = $this->post('/api/register', [
+            'name' => '1',
+            'email' => 'new@mail.com',
+            'password' => 'password'
+        ]);
+
+        $response->assertStatus(400);
+    }
+
+    public function testFailedEmail(): void
+    {
+        $response = $this->post('/api/register', [
+            'name' => 'New',
+            'email' => 'mail.com',
+            'password' => 'passw'
+        ]);
+
+        $response->assertStatus(400);
+    }
+
+    public function testFailedPassword(): void
+    {
+        $response = $this->post('/api/register', [
+            'name' => 'New',
+            'email' => 'mail@mail.com',
+            'password' => 'pass'
+        ]);
+
+        $response->assertStatus(400);
+    }
 }

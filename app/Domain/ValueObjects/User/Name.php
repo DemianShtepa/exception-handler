@@ -9,11 +9,12 @@ use Webmozart\Assert\Assert;
 final class Name
 {
     private string $value;
-    private const NAME_SIZE = 255;
+    private const MAX_NAME_SIZE = 255;
+    private const MIN_NAME_SIZE = 3;
 
     public function __construct(string $value)
     {
-        Assert::maxLength($value, self::NAME_SIZE);
+        Assert::lengthBetween($value, self::MIN_NAME_SIZE, self::MAX_NAME_SIZE);
         $this->value = $value;
     }
 
