@@ -6,6 +6,6 @@ namespace App\Domain\Exceptions;
 
 use Exception;
 
-abstract class ModelNotFoundException extends Exception
+abstract class NotFoundException extends Exception
 {
 }

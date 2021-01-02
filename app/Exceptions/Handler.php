@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-use App\Domain\Exceptions\ModelNotFoundException;
+use App\Domain\Exceptions\NotFoundException;
 use App\Domain\Exceptions\User\UserAlreadyExistsException;
 use DomainException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -58,7 +58,7 @@ class Handler extends ExceptionHandler
             return new JsonResponse($response, Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        if ($e instanceof ModelNotFoundException) {
+        if ($e instanceof NotFoundException) {
             $response['status_code'] = Response::HTTP_NOT_FOUND;
             return new JsonResponse($response, Response::HTTP_NOT_FOUND);
         }
