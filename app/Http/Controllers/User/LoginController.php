@@ -22,8 +22,8 @@ final class LoginController
     public function login(Request $request)
     {
         $apiToken = $this->authenticator->login(
-          new Email($request->get('email', '')),
-          new CleanPassword($request->get('password', ''))
+            new Email($request->get('email', '')),
+            new CleanPassword($request->get('password', ''))
         );
 
         return new JsonResponse(['api_token' => $apiToken->getToken()]);

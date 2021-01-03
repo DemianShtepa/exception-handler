@@ -3,7 +3,7 @@
 namespace App\Exceptions;
 
 use App\Domain\Exceptions\NotFoundException;
-use App\Domain\Exceptions\User\UserAlreadyExistsException;
+use App\Domain\Exceptions\ValidationException;
 use DomainException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use InvalidArgumentException;
