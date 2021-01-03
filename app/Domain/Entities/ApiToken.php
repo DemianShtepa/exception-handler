@@ -33,4 +33,9 @@ class ApiToken
     {
         return $this->token;
     }
+
+    public function isExpiredComparedTo(DateTimeImmutable $comparedDate): bool
+    {
+        return $this->expiresAt < $comparedDate;
+    }
 }

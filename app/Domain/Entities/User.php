@@ -43,4 +43,9 @@ class User
     {
         return $this->email;
     }
+
+    public function setApiToken(ApiToken $apiToken): void
+    {
+        $this->apiToken = $apiToken;
+    }
 }
