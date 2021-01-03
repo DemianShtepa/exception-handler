@@ -11,7 +11,7 @@ final class UserControllerTest extends TestCase
     public function testSuccessGettingUser(): void
     {
         $response = $this->withHeader('Authorization', 'Bearer token')
-            ->postJson('/api/user');
+            ->get('/api/user');
 
         $response->assertStatus(200);
     }
@@ -19,7 +19,7 @@ final class UserControllerTest extends TestCase
     public function testFailedGettingUser(): void
     {
         $response = $this->withHeader('Authorization', 'Bearer invalid-token')
-            ->postJson('/api/user');
+            ->get('/api/user');
 
         $response->assertStatus(401);
     }
