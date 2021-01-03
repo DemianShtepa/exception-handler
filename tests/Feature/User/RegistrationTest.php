@@ -6,11 +6,11 @@ namespace Tests\Feature\User;
 
 use Tests\TestCase;
 
-class RegistrationTest extends TestCase
+final class RegistrationTest extends TestCase
 {
     public function testFailedRegistration(): void
     {
-        $response = $this->post('/api/register', [
+        $response = $this->postJson('/api/register', [
             'name' => 'Exist',
             'email' => 'exist@exist.com',
             'password' => 'password'
@@ -21,7 +21,7 @@ class RegistrationTest extends TestCase
 
     public function testSuccessRegistration(): void
     {
-        $response = $this->post('/api/register', [
+        $response = $this->postJson('/api/register', [
             'name' => 'New',
             'email' => 'new@mail.com',
             'password' => 'password'
@@ -32,7 +32,7 @@ class RegistrationTest extends TestCase
 
     public function testFailedName(): void
     {
-        $response = $this->post('/api/register', [
+        $response = $this->postJson('/api/register', [
             'name' => '1',
             'email' => 'new@mail.com',
             'password' => 'password'
@@ -43,7 +43,7 @@ class RegistrationTest extends TestCase
 
     public function testFailedEmail(): void
     {
-        $response = $this->post('/api/register', [
+        $response = $this->postJson('/api/register', [
             'name' => 'New',
             'email' => 'mail.com',
             'password' => 'passw'
@@ -54,7 +54,7 @@ class RegistrationTest extends TestCase
 
     public function testFailedPassword(): void
     {
-        $response = $this->post('/api/register', [
+        $response = $this->postJson('/api/register', [
             'name' => 'New',
             'email' => 'mail@mail.com',
             'password' => 'pass'

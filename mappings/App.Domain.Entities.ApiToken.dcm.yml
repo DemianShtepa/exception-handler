@@ -1,0 +1,21 @@
+App\Domain\Entities\ApiToken:
+  type: entity
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  table: api_tokens
+  fields:
+    token:
+      type: string
+      unique: true
+    expiresAt:
+      type: datetime_immutable
+  oneToOne:
+    user:
+      targetEntity: User
+      inversedBy: apiToken
+      joinColumn:
+        name: user_id
+        referencedColumnName: id

@@ -12,7 +12,7 @@ final class Email
 
     public function __construct(string $value)
     {
-        Assert::email($value);
+        Assert::email($value, 'Expected an email field to be a valid e-mail address');
         $this->value = $value;
     }
 

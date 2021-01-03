@@ -13,7 +13,11 @@ final class CleanPassword
 
     public function __construct(string $value)
     {
-        Assert::minLength($value, self::PASSWORD_SIZE);
+        Assert::minLength(
+            $value,
+            self::PASSWORD_SIZE,
+            'Expected a password field to contain at least ' . self::PASSWORD_SIZE . ' characters.'
+        );
         $this->value = $value;
     }
 

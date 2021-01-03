@@ -16,3 +16,8 @@ App\Domain\Entities\User:
     email:
       class: App\Domain\ValueObjects\User\Email
       columnPrefix: false
+  oneToOne:
+    apiToken:
+      targetEntity: ApiToken
+      mappedBy: user
+      cascade: ["persist", "remove"]

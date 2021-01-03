@@ -14,7 +14,14 @@ final class Name
 
     public function __construct(string $value)
     {
-        Assert::lengthBetween($value, self::MIN_NAME_SIZE, self::MAX_NAME_SIZE);
+        Assert::lengthBetween(
+            $value,
+            self::MIN_NAME_SIZE,
+            self::MAX_NAME_SIZE,
+            'Expected a name field to contain between '
+            . self::MIN_NAME_SIZE . ' and '
+            . self::MAX_NAME_SIZE . ' characters'
+        );
         $this->value = $value;
     }
 

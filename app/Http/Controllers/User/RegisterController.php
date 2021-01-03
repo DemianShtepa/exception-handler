@@ -21,14 +21,14 @@ final class RegisterController
         $this->registrar = $registrar;
     }
 
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse
     {
-        $user = $this->registrar->register(
+        $apiToken = $this->registrar->register(
             new Name($request->get('name', '')),
             new Email($request->get('email', '')),
             new CleanPassword($request->get('password', ''))
         );
 
-        return new JsonResponse(null, Response::HTTP_CREATED);
+        return new JsonResponse(['api_token' => $apiToken->getToken()], Response::HTTP_CREATED);
     }
 }
