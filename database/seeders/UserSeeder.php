@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Domain\Entities\ApiToken;
+use App\Domain\Entities\ResetPasswordRequest;
 use App\Domain\Entities\User;
+use App\Domain\Repositories\ResetPasswordRequestRepository;
 use App\Domain\Repositories\UserRepository;
 use App\Domain\ValueObjects\User\CleanPassword;
 use App\Domain\ValueObjects\User\Email;
@@ -28,5 +30,16 @@ class UserSeeder extends Seeder
 
         $userRepository->persist($user);
         $userRepository->flush();
+        $this->createResetPasswordRequest($user);
+    }
+
+    private function createResetPasswordRequest(User $user): void
+    {
+        $requestRepository = $this->container->get(ResetPasswordRequestRepository::class);
+
+        $request = new ResetPasswordRequest($user, 'token', (new DateTimeImmutable())->add(new DateInterval('PT1H')));
+
+        $requestRepository->persist($request);
+        $requestRepository->flush();
     }
 }

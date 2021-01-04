@@ -3,6 +3,7 @@
 use App\Providers\PasswordHasherProvider;
 use App\Providers\RepositoryServiceProvider;
 use App\Providers\TokenGeneratorProvider;
+use App\Providers\TransactionServiceProvider;
 
 return [
 
@@ -182,7 +183,8 @@ return [
         LaravelDoctrine\Migrations\MigrationsServiceProvider::class,
         RepositoryServiceProvider::class,
         PasswordHasherProvider::class,
-        TokenGeneratorProvider::class
+        TokenGeneratorProvider::class,
+        TransactionServiceProvider::class
     ],
 
     /*

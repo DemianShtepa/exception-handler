@@ -6,32 +6,17 @@ namespace App\Domain\Entities;
 
 use DateTimeImmutable;
 
-class ApiToken
+class ResetPasswordRequest
 {
-    private int $id;
-    private ?User $user;
+    private User $user;
     private string $token;
     private DateTimeImmutable $expiresAt;
 
-    public function __construct(string $token, DateTimeImmutable $expiresAt)
-    {
-        $this->token = $token;
-        $this->expiresAt = $expiresAt;
-    }
-
-    public function setUser(User $user): void
+    public function __construct(User $user, string $token, DateTimeImmutable $expiresAt)
     {
         $this->user = $user;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function getToken(): string
-    {
-        return $this->token;
+        $this->token = $token;
+        $this->expiresAt = $expiresAt;
     }
 
     public function isExpiredComparedTo(DateTimeImmutable $comparedDate): bool
@@ -47,5 +32,15 @@ class ApiToken
     public function setExpiresAt(DateTimeImmutable $expiresAt): void
     {
         $this->expiresAt = $expiresAt;
+    }
+
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    public function getUser(): User
+    {
+        return $this->user;
     }
 }

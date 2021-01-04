@@ -46,6 +46,7 @@ final class AuthenticatorTest extends TestCase
     {
         $token = new ApiToken('some-token', (new DateTimeImmutable())->add(new DateInterval('PT1H')));
         $this->passwordHasher->method('check')->willReturn(true);
+        $this->tokenGenerator->method('generate')->willReturn('new-token');
         $this->userRepository->method('getByEmail')
             ->willReturn(new User(
                 new Name('some name'),
@@ -57,13 +58,14 @@ final class AuthenticatorTest extends TestCase
 
         $returnedToken = $this->authenticator->login(new Email('some@email.com'), new CleanPassword('password'));
 
-        $this->assertEquals($token->getToken(), $returnedToken->getToken());
+        $this->assertEquals('some-token', $returnedToken->getToken());
     }
 
     public function testReturnNewTokenIfExpired()
     {
         $token = new ApiToken('some-token', (new DateTimeImmutable())->sub(new DateInterval('PT1H')));
         $this->passwordHasher->method('check')->willReturn(true);
+        $this->tokenGenerator->method('generate')->willReturn('new-token');
         $this->userRepository->method('getByEmail')
             ->willReturn(new User(
                 new Name('some name'),
@@ -75,6 +77,6 @@ final class AuthenticatorTest extends TestCase
 
         $returnedToken = $this->authenticator->login(new Email('some@email.com'), new CleanPassword('password'));
 
-        $this->assertNotEquals($token->getToken(), $returnedToken->getToken());
+        $this->assertEquals('new-token', $returnedToken->getToken());
     }
 }

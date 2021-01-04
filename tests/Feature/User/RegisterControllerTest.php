@@ -6,7 +6,7 @@ namespace Tests\Feature\User;
 
 use Tests\TestCase;
 
-final class RegistrationTest extends TestCase
+final class RegisterControllerTest extends TestCase
 {
     public function testFailedRegistration(): void
     {

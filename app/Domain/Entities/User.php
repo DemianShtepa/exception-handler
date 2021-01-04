@@ -44,8 +44,13 @@ class User
         return $this->email;
     }
 
-    public function setApiToken(ApiToken $apiToken): void
+    public function getId(): int
     {
-        $this->apiToken = $apiToken;
+        return $this->id;
+    }
+
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
     }
 }

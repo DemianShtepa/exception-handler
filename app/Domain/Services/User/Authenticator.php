@@ -42,13 +42,11 @@ final class Authenticator
         }
 
         if ($token->isExpiredComparedTo(new DateTimeImmutable())) {
-            $user->setApiToken(
-                new ApiToken(
-                    $this->tokenGenerator->generate(),
-                    (new DateTimeImmutable())->add(new DateInterval('P5D'))
-                )
-            );
-            $token = $user->getApiToken();
+            $token->setToken($this->tokenGenerator->generate());
+            $token->setExpiresAt((new DateTimeImmutable())->add(new DateInterval('P5D')));
+
+            $this->userRepository->persist($user);
+            $this->userRepository->flush();
         }
 
         return $token;

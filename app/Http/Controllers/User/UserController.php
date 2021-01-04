@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 final class UserController
 {
-    public function getUser(Request $request)
+    public function getUser(Request $request): JsonResponse
     {
         /** @var User $user */
         $user = $request->user();

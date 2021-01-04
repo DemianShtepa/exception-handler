@@ -19,7 +19,7 @@ final class LoginController
         $this->authenticator = $authenticator;
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
         $apiToken = $this->authenticator->login(
             new Email($request->get('email', '')),

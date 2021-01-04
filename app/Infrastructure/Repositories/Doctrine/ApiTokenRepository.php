@@ -30,4 +30,14 @@ final class ApiTokenRepository extends EntityRepository implements ApiTokenRepos
 
         return $token;
     }
+
+    public function persist(ApiToken $apiToken): void
+    {
+        $this->_em->persist($apiToken);
+    }
+
+    public function flush(): void
+    {
+        $this->_em->flush();
+    }
 }
