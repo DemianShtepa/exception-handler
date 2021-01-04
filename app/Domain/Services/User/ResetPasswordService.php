@@ -6,6 +6,7 @@ namespace App\Domain\Services\User;
 
 use App\Domain\Entities\ResetPasswordRequest;
 use App\Domain\Entities\User;
+use App\Domain\Exceptions\ResetPasswordRequest\ResetPasswordRequestExpiredException;
 use App\Domain\Exceptions\ResetPasswordRequest\ResetPasswordRequestNotFound;
 use App\Domain\Repositories\ResetPasswordRequestRepository;
 use App\Domain\Repositories\UserRepository;
@@ -55,6 +56,10 @@ final class ResetPasswordService
     public function resetPassword(string $token, CleanPassword $cleanPassword): void
     {
         $request = $this->resetPasswordRequestRepository->getByToken($token);
+        if ($request->isExpiredComparedTo(new DateTimeImmutable())) {
+            throw new ResetPasswordRequestExpiredException();
+        }
+
         $user = $request->getUser();
 
         $this->transaction->execute(function () use ($user, $cleanPassword, $request) {
