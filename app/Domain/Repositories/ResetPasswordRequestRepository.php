@@ -7,7 +7,6 @@ namespace App\Domain\Repositories;
 use App\Domain\Entities\ResetPasswordRequest;
 use App\Domain\Entities\User;
 use App\Domain\Exceptions\ResetPasswordRequest\ResetPasswordRequestNotFound;
-use App\Domain\ValueObjects\User\Email;
 
 interface ResetPasswordRequestRepository
 {

@@ -9,8 +9,6 @@ use App\Domain\Exceptions\ApiToken\TokenNotFoundException;
 
 interface ApiTokenRepository
 {
-    public function hasByToken(string $token): bool;
-
     /** @throws TokenNotFoundException */
     public function getByToken(string $token): ApiToken;
 }

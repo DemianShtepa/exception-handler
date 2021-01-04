@@ -19,27 +19,56 @@ use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
-    public function run(UserRepository $userRepository, PasswordHasher $passwordHasher): void
+    private UserRepository $userRepository;
+    private PasswordHasher $passwordHasher;
+    private ResetPasswordRequestRepository $resetPasswordRequestRepository;
+
+    public function run(
+        UserRepository $userRepository,
+        PasswordHasher $passwordHasher,
+        ResetPasswordRequestRepository $resetPasswordRequestRepository
+    ): void
+    {
+        $this->userRepository = $userRepository;
+        $this->passwordHasher = $passwordHasher;
+        $this->resetPasswordRequestRepository = $resetPasswordRequestRepository;
+
+        $this->createUser();
+        $this->createUserWithPasswordRequest();
+
+        $this->userRepository->flush();
+        $this->resetPasswordRequestRepository->flush();
+    }
+
+    private function createUserWithPasswordRequest(): void
     {
         $user = new User(
             new Name('Exist'),
             new Email('exist@exist.com'),
-            $passwordHasher->hash(new CleanPassword('password')),
+            $this->passwordHasher->hash(new CleanPassword('password')),
             new ApiToken('token', (new DateTimeImmutable())->add(new DateInterval('PT1H')))
         );
 
-        $userRepository->persist($user);
-        $userRepository->flush();
+        $this->userRepository->persist($user);
         $this->createResetPasswordRequest($user);
     }
 
     private function createResetPasswordRequest(User $user): void
     {
-        $requestRepository = $this->container->get(ResetPasswordRequestRepository::class);
-
         $request = new ResetPasswordRequest($user, 'token', (new DateTimeImmutable())->add(new DateInterval('PT1H')));
 
-        $requestRepository->persist($request);
-        $requestRepository->flush();
+        $this->resetPasswordRequestRepository->persist($request);
+    }
+
+    private function createUser(): void
+    {
+        $user = new User(
+            new Name('Exist'),
+            new Email('exist@exist.com1'),
+            $this->passwordHasher->hash(new CleanPassword('password')),
+            new ApiToken('token1', (new DateTimeImmutable())->add(new DateInterval('PT1H')))
+        );
+
+        $this->userRepository->persist($user);
     }
 }

@@ -8,7 +8,7 @@ use Tests\TestCase;
 
 final class ResetPasswordControllerTest extends TestCase
 {
-    public function testRequestResetPassword(): void
+    public function testRequestResetPasswordAndReturnOld(): void
     {
         $response = $this->postJson('/api/request-reset-password', [
             'email' => 'exist@exist.com',
@@ -17,10 +17,19 @@ final class ResetPasswordControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function testEmailNotExists(): void
+    public function testRequestResetPasswordAndCreateNew(): void
     {
         $response = $this->postJson('/api/request-reset-password', [
             'email' => 'exist@exist.com1',
+        ]);
+
+        $response->assertStatus(200);
+    }
+
+    public function testEmailNotExists(): void
+    {
+        $response = $this->postJson('/api/request-reset-password', [
+            'email' => 'not@exist.com',
         ]);
 
         $response->assertStatus(404);
