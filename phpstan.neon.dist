@@ -4,3 +4,4 @@ parameters:
         - app/Domain
         - app/Infrastructure
     checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false

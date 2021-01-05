@@ -21,3 +21,7 @@ App\Domain\Entities\User:
       targetEntity: ApiToken
       mappedBy: user
       cascade: ["persist", "remove"]
+  oneToMany:
+    virtualProjects:
+      targetEntity: VirtualProject
+      mappedBy: owner
