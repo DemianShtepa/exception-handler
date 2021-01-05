@@ -57,7 +57,7 @@ final class ResetPasswordService
             $request = $this->createNewRequest($user);
         }
 
-        $this->eventDispatcher->dispatch(new ResetPasswordRequested($email, $request->getToken()));
+        $this->eventDispatcher->dispatch(new ResetPasswordRequested($email->getValue(), $request->getToken()));
 
         return $request;
     }

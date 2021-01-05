@@ -23,7 +23,7 @@ final class ResetPasswordController
     {
         $this->resetPasswordService->requestResetPassword(new Email($request->get('email', '')));
 
-        return new JsonResponse();
+        return new JsonResponse(['message' => 'Reset password requested.']);
     }
 
     public function resetPassword(Request $request): JsonResponse
@@ -33,6 +33,6 @@ final class ResetPasswordController
             new CleanPassword($request->get('password', ''))
         );
 
-        return new JsonResponse();
+        return new JsonResponse(['message' => 'Password reset.']);
     }
 }
