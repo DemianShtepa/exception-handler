@@ -6,6 +6,8 @@ namespace App\Domain\Services\User;
 
 use App\Domain\Entities\ResetPasswordRequest;
 use App\Domain\Entities\User;
+use App\Domain\Events\Interfaces\EventDispatcher;
+use App\Domain\Events\ResetPasswordRequested;
 use App\Domain\Exceptions\ResetPasswordRequest\ResetPasswordRequestExpiredException;
 use App\Domain\Exceptions\ResetPasswordRequest\ResetPasswordRequestNotFound;
 use App\Domain\Repositories\ResetPasswordRequestRepository;
@@ -25,19 +27,22 @@ final class ResetPasswordService
     private UserRepository $userRepository;
     private PasswordHasher $passwordHasher;
     private Transaction $transaction;
+    private EventDispatcher $eventDispatcher;
 
     public function __construct(
         ResetPasswordRequestRepository $resetPasswordRequestRepository,
         TokenGenerator $tokenGenerator,
         UserRepository $userRepository,
         PasswordHasher $passwordHasher,
-        Transaction $transaction
+        Transaction $transaction,
+        EventDispatcher $eventDispatcher
     ) {
         $this->resetPasswordRequestRepository = $resetPasswordRequestRepository;
         $this->tokenGenerator = $tokenGenerator;
         $this->userRepository = $userRepository;
         $this->passwordHasher = $passwordHasher;
         $this->transaction = $transaction;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function requestResetPassword(Email $email): ResetPasswordRequest
@@ -47,10 +52,14 @@ final class ResetPasswordService
         try {
             $request = $this->resetPasswordRequestRepository->getByUser($user);
 
-            return $this->processExistedRequest($request);
+            $request = $this->processExistedRequest($request);
         } catch (ResetPasswordRequestNotFound $exception) {
-            return $this->createNewRequest($user);
+            $request = $this->createNewRequest($user);
         }
+
+        $this->eventDispatcher->dispatch(new ResetPasswordRequested($email, $request->getToken()));
+
+        return $request;
     }
 
     public function resetPassword(string $token, CleanPassword $cleanPassword): void

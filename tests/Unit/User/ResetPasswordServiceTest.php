@@ -6,6 +6,7 @@ namespace Tests\Unit\User;
 
 use App\Domain\Entities\ResetPasswordRequest;
 use App\Domain\Entities\User;
+use App\Domain\Events\Interfaces\EventDispatcher;
 use App\Domain\Exceptions\ResetPasswordRequest\ResetPasswordRequestExpiredException;
 use App\Domain\Exceptions\ResetPasswordRequest\ResetPasswordRequestNotFound;
 use App\Domain\Repositories\ResetPasswordRequestRepository;
@@ -28,6 +29,7 @@ final class ResetPasswordServiceTest extends TestCase
     private PasswordHasher $passwordHasher;
     private UserRepository $userRepository;
     private Transaction $transaction;
+    private EventDispatcher $eventDispatcher;
 
     public function setUp(): void
     {
@@ -36,6 +38,7 @@ final class ResetPasswordServiceTest extends TestCase
         $this->passwordHasher = $this->createMock(PasswordHasher::class);
         $this->userRepository = $this->createMock(UserRepository::class);
         $this->transaction = $this->createMock(Transaction::class);
+        $this->eventDispatcher = $this->createMock(EventDispatcher::class);
     }
 
     public function testSuccessResetPasswordCreation(): void
@@ -47,7 +50,8 @@ final class ResetPasswordServiceTest extends TestCase
             $this->tokenGenerator,
             $this->userRepository,
             $this->passwordHasher,
-            $this->transaction
+            $this->transaction,
+            $this->eventDispatcher
         );
 
         $returnedRequest = $this->resetPasswordService->requestResetPassword(new Email('some@mail.com'));
@@ -67,7 +71,8 @@ final class ResetPasswordServiceTest extends TestCase
             $this->tokenGenerator,
             $this->userRepository,
             $this->passwordHasher,
-            $this->transaction
+            $this->transaction,
+            $this->eventDispatcher
         );
 
         $this->expectException(ResetPasswordRequestExpiredException::class);
@@ -89,7 +94,8 @@ final class ResetPasswordServiceTest extends TestCase
             $this->tokenGenerator,
             $this->userRepository,
             $this->passwordHasher,
-            $this->transaction
+            $this->transaction,
+            $this->eventDispatcher
         );
 
         $returnedRequest = $this->resetPasswordService->requestResetPassword(new Email('some@mail.com'));
@@ -111,7 +117,8 @@ final class ResetPasswordServiceTest extends TestCase
             $this->tokenGenerator,
             $this->userRepository,
             $this->passwordHasher,
-            $this->transaction
+            $this->transaction,
+            $this->eventDispatcher
         );
 
         $returnedRequest = $this->resetPasswordService->requestResetPassword(new Email('some@mail.com'));

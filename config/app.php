@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\EventDispatcherServiceProvider;
 use App\Providers\PasswordHasherProvider;
 use App\Providers\RepositoryServiceProvider;
 use App\Providers\TokenGeneratorProvider;
@@ -184,7 +185,8 @@ return [
         RepositoryServiceProvider::class,
         PasswordHasherProvider::class,
         TokenGeneratorProvider::class,
-        TransactionServiceProvider::class
+        TransactionServiceProvider::class,
+        EventDispatcherServiceProvider::class
     ],
 
     /*
