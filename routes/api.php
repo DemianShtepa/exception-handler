@@ -24,5 +24,6 @@ Route::post('/request-reset-password', [ResetPasswordController::class, 'request
 Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword']);
 Route::middleware('auth:api')->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
+    Route::get('/virtual-projects', [VirtualProjectController::class, 'getAll']);
     Route::post('/virtual-project', [VirtualProjectController::class, 'create']);
 });

@@ -25,4 +25,12 @@ class VirtualProjectControllerTest extends TestCase
 
         $response->assertStatus(400);
     }
+
+    public function testSuccessGettingAllProjects(): void
+    {
+        $response = $this->withHeader('Authorization', 'Bearer token')
+            ->get('/api/virtual-projects');
+
+        $response->assertStatus(200);
+    }
 }

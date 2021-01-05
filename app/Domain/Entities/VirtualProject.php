@@ -49,4 +49,9 @@ class VirtualProject
     {
         return $this->inviteToken;
     }
+
+    public function getCreatedAt(): DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
 }
