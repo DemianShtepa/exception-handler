@@ -41,4 +41,12 @@ class VirtualProjectControllerTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function testVirtualProjectNotFound(): void
+    {
+        $response = $this->withHeader('Authorization', 'Bearer token')
+            ->postJson('/api/virtual-project/token1/subscribe');
+
+        $response->assertStatus(404);
+    }
 }

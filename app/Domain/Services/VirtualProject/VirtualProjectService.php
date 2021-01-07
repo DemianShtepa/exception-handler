@@ -23,8 +23,7 @@ final class VirtualProjectService
         VirtualProjectRepository $virtualProjectRepository,
         TokenGenerator $tokenGenerator,
         UserRepository $userRepository
-    )
-    {
+    ) {
         $this->virtualProjectRepository = $virtualProjectRepository;
         $this->tokenGenerator = $tokenGenerator;
         $this->userRepository = $userRepository;
