@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\VirtualProject;
 
+use App\Domain\Entities\User;
 use App\Domain\Entities\VirtualProject;
+use App\Domain\Repositories\UserRepository;
 use App\Domain\Repositories\VirtualProjectRepository;
 use App\Domain\Services\VirtualProject\VirtualProjectService;
 use App\Domain\ValueObjects\VirtualProject\Name;
@@ -15,15 +17,10 @@ use Illuminate\Http\Response;
 final class VirtualProjectController
 {
     private VirtualProjectService $virtualProjectService;
-    private VirtualProjectRepository $virtualProjectRepository;
 
-    public function __construct(
-        VirtualProjectService $virtualProjectService,
-        VirtualProjectRepository $virtualProjectRepository
-    )
+    public function __construct(VirtualProjectService $virtualProjectService)
     {
         $this->virtualProjectService = $virtualProjectService;
-        $this->virtualProjectRepository = $virtualProjectRepository;
     }
 
     public function create(Request $request): JsonResponse
@@ -49,5 +46,14 @@ final class VirtualProjectController
         }, $request->user()->getVirtualProjects()->toArray());
 
         return new JsonResponse($projects);
+    }
+
+    public function subscribe(Request $request, string $inviteToken): JsonResponse
+    {
+        $this->virtualProjectService->subscribe($request->user(), $inviteToken);
+
+        return new JsonResponse([
+            'message' => 'User subscribed.'
+        ]);
     }
 }

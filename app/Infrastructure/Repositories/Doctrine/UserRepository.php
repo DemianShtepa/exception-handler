@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Infrastructure\Repositories\Doctrine;
 
 use App\Domain\Entities\User;
+use App\Domain\Entities\VirtualProject;
 use App\Domain\Exceptions\User\UserNotFoundException;
 use App\Domain\Repositories\UserRepository as UserRepositoryInterface;
 use App\Domain\ValueObjects\User\Email;
@@ -23,21 +24,31 @@ final class UserRepository extends EntityRepository implements UserRepositoryInt
         return $user;
     }
 
-    public function persist(User $user): void
-    {
-        $this->_em->persist($user);
-    }
-
-    public function flush(): void
-    {
-        $this->_em->flush();
-    }
-
     public function hasByEmail(Email $email): bool
     {
         /** @var User|null $user */
         $user = $this->findOneBy(['email.value' => $email->getValue()]);
 
         return (bool)$user;
+    }
+
+    public function save(User $user): void
+    {
+        $this->_em->persist($user);
+        $this->_em->flush();
+    }
+
+    public function isUserSubscribedTo(User $user, VirtualProject $virtualProject): bool
+    {
+        return (bool) $this->_em->createQueryBuilder()
+            ->select('u')
+            ->from(User::class, 'u')
+            ->join('u.subscriptions', 's')
+            ->where('u.id = :user')
+            ->andWhere('s.id = :virtualProject')
+            ->setParameter('user', $user)
+            ->setParameter('virtualProject', $virtualProject)
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -6,6 +6,8 @@ namespace App\Domain\Entities;
 
 use App\Domain\ValueObjects\VirtualProject\Name;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 class VirtualProject
 {
@@ -15,6 +17,7 @@ class VirtualProject
     private string $inviteToken;
     private DateTimeImmutable $createdAt;
     private User $owner;
+    private Collection $subscribers;
 
     public function __construct(
         Name $name,
@@ -28,6 +31,7 @@ class VirtualProject
         $this->inviteToken = $inviteToken;
         $this->createdAt = $createdAt;
         $this->owner = $owner;
+        $this->subscribers = new ArrayCollection();
     }
 
     public function getOwner(): User
@@ -53,5 +57,10 @@ class VirtualProject
     public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function getSubscribers(): Collection
+    {
+        return $this->subscribers;
     }
 }

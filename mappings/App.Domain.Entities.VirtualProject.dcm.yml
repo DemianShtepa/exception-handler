@@ -26,4 +26,7 @@ App\Domain\Entities\VirtualProject:
       joinColumn:
         name: owner_id
         referencedColumnName: id
-
+  manyToMany:
+    subscribers:
+      targetEntity: User
+      mappedBy: groups

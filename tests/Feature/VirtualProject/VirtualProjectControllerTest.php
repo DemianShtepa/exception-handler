@@ -11,7 +11,7 @@ class VirtualProjectControllerTest extends TestCase
     public function testSuccessVirtualProjectCreation(): void
     {
         $response = $this->withHeader('Authorization', 'Bearer token')
-            ->postJson('/api/virtual-project', [
+            ->postJson('/api/virtual-projects', [
                 'name' => 'some name'
             ]);
 
@@ -21,7 +21,7 @@ class VirtualProjectControllerTest extends TestCase
     public function testNameFieldMissed(): void
     {
         $response = $this->withHeader('Authorization', 'Bearer token')
-            ->postJson('/api/virtual-project', []);
+            ->postJson('/api/virtual-projects', []);
 
         $response->assertStatus(400);
     }
@@ -30,6 +30,14 @@ class VirtualProjectControllerTest extends TestCase
     {
         $response = $this->withHeader('Authorization', 'Bearer token')
             ->get('/api/virtual-projects');
+
+        $response->assertStatus(200);
+    }
+
+    public function testSuccessfulSubscribing(): void
+    {
+        $response = $this->withHeader('Authorization', 'Bearer token')
+            ->postJson('/api/virtual-project/token/subscribe');
 
         $response->assertStatus(200);
     }

@@ -17,6 +17,7 @@ class User
     private string $password;
     private ApiToken $apiToken;
     private Collection $virtualProjects;
+    private Collection $subscriptions;
 
     public function __construct(Name $name, Email $email, string $password, ApiToken $apiToken)
     {
@@ -26,6 +27,7 @@ class User
         $this->apiToken = $apiToken;
         $this->apiToken->setUser($this);
         $this->virtualProjects = new ArrayCollection();
+        $this->subscriptions = new ArrayCollection();
     }
 
     public function getApiToken(): ApiToken
@@ -66,5 +68,15 @@ class User
     public function addVirtualProject(VirtualProject $virtualProject): void
     {
         $this->virtualProjects->add($virtualProject);
+    }
+
+    public function getSubscriptions(): Collection
+    {
+        return $this->subscriptions;
+    }
+
+    public function subscribe(VirtualProject $virtualProject): void
+    {
+        $this->subscriptions->add($virtualProject);
     }
 }

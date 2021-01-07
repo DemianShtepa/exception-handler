@@ -45,8 +45,7 @@ final class Authenticator
             $token->setToken($this->tokenGenerator->generate());
             $token->setExpiresAt((new DateTimeImmutable())->add(new DateInterval('P5D')));
 
-            $this->userRepository->persist($user);
-            $this->userRepository->flush();
+            $this->userRepository->save($user);
         }
 
         return $token;

@@ -10,35 +10,28 @@ final class ResetPasswordControllerTest extends TestCase
 {
     public function testRequestResetPasswordAndReturnOld(): void
     {
-        $response = $this->postJson('/api/request-reset-password', [
-            'email' => 'exist@exist.com',
-        ]);
+        $response = $this->post('/api/request-reset-password/exist@exist.com');
 
         $response->assertStatus(200);
     }
 
     public function testRequestResetPasswordAndCreateNew(): void
     {
-        $response = $this->postJson('/api/request-reset-password', [
-            'email' => 'exist@exist.com1',
-        ]);
+        $response = $this->post('/api/request-reset-password/exist@exist.com1');
 
         $response->assertStatus(200);
     }
 
     public function testEmailNotExists(): void
     {
-        $response = $this->postJson('/api/request-reset-password', [
-            'email' => 'not@exist.com',
-        ]);
+        $response = $this->post('/api/request-reset-password/not@exist.com');
 
         $response->assertStatus(404);
     }
 
     public function testTokenNotExists(): void
     {
-        $response = $this->postJson('/api/reset-password', [
-            'token' => 'token1',
+        $response = $this->postJson('/api/reset-password/token1', [
             'password' => 'password'
         ]);
 
@@ -47,9 +40,7 @@ final class ResetPasswordControllerTest extends TestCase
 
     public function testPasswordIsMissed(): void
     {
-        $response = $this->postJson('/api/reset-password', [
-            'token' => 'token1'
-        ]);
+        $response = $this->post('/api/reset-password/token1',);
 
         $response->assertStatus(400);
     }
@@ -65,8 +56,7 @@ final class ResetPasswordControllerTest extends TestCase
 
     public function testSuccessResetPassword(): void
     {
-        $response = $this->postJson('/api/reset-password', [
-            'token' => 'token',
+        $response = $this->postJson('/api/reset-password/token', [
             'password' => 'password'
         ]);
 

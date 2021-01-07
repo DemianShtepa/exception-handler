@@ -36,18 +36,15 @@ final class ResetPasswordRequestRepository extends EntityRepository implements R
         return $request;
     }
 
-    public function persist(ResetPasswordRequest $request): void
-    {
-        $this->_em->persist($request);
-    }
-
-    public function flush(): void
-    {
-        $this->_em->flush();
-    }
-
     public function remove(ResetPasswordRequest $request): void
     {
         $this->_em->remove($request);
+        $this->_em->flush();
+    }
+
+    public function save(ResetPasswordRequest $request): void
+    {
+        $this->_em->persist($request);
+        $this->_em->flush();
     }
 }

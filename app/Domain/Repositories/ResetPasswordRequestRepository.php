@@ -16,9 +16,7 @@ interface ResetPasswordRequestRepository
     /** @throws ResetPasswordRequestNotFound */
     public function getByUser(User $user): ResetPasswordRequest;
 
-    public function persist(ResetPasswordRequest $request): void;
-
-    public function flush(): void;
+    public function save(ResetPasswordRequest $request): void;
 
     public function remove(ResetPasswordRequest $request): void;
 }

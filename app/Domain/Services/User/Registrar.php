@@ -45,8 +45,7 @@ final class Registrar
             (new DateTimeImmutable())->add(new DateInterval('P5D'))
         );
         $user = new User($name, $email, $this->passwordHasher->hash($cleanPassword), $apiToken);
-        $this->userRepository->persist($user);
-        $this->userRepository->flush();
+        $this->userRepository->save($user);
 
         return $apiToken;
     }

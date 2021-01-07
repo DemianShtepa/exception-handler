@@ -5,8 +5,8 @@ namespace App\Exceptions;
 use App\Domain\Exceptions\NotFoundException;
 use DomainException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
 use InvalidArgumentException;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 

@@ -25,3 +25,15 @@ App\Domain\Entities\User:
     virtualProjects:
       targetEntity: VirtualProject
       mappedBy: owner
+  manyToMany:
+    subscriptions:
+      targetEntity: VirtualProject
+      inversedBy: users
+      joinTable:
+        name: subscriptions
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          virtual_project_id:
+            referencedColumnName: id

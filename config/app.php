@@ -185,7 +185,6 @@ return [
         RepositoryServiceProvider::class,
         PasswordHasherProvider::class,
         TokenGeneratorProvider::class,
-        TransactionServiceProvider::class,
         EventDispatcherServiceProvider::class
     ],
 
