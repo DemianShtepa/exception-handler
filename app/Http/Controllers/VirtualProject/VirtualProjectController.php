@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\VirtualProject;
 
-use App\Domain\Entities\User;
 use App\Domain\Entities\VirtualProject;
-use App\Domain\Repositories\UserRepository;
-use App\Domain\Repositories\VirtualProjectRepository;
 use App\Domain\Services\VirtualProject\VirtualProjectService;
-use App\Domain\ValueObjects\VirtualProject\Name;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -26,7 +22,7 @@ final class VirtualProjectController
     public function create(Request $request): JsonResponse
     {
         $this->virtualProjectService->createVirtualProject(
-            new Name($request->get('name', '')),
+            $request->get('name', ''),
             $request->user()
         );
         return new JsonResponse([
@@ -55,5 +51,33 @@ final class VirtualProjectController
         return new JsonResponse([
             'message' => 'User subscribed.'
         ]);
+    }
+
+    public function updateName(Request $request, string $id): JsonResponse
+    {
+        $name = $this->virtualProjectService
+            ->updateName($request->user(), $request->get('name', ''), (int)$id);
+
+        return new JsonResponse(
+            ['name' => $name]
+        );
+    }
+
+    public function changeInviteToken(Request $request, string $id): JsonResponse
+    {
+        $token = $this->virtualProjectService->changeInviteToken($request->user(), (int)$id);
+
+        return new JsonResponse([
+            'invite_token' => $token
+        ]);
+    }
+
+    public function changePushToken(Request $request, string $id): JsonResponse
+    {
+        $token = $this->virtualProjectService->changePushToken($request->user(), (int)$id);
+
+        return new JsonResponse(
+            ['push_token' => $token]
+        );
     }
 }

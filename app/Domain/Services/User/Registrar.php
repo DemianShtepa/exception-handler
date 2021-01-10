@@ -34,8 +34,12 @@ final class Registrar
         $this->tokenGenerator = $tokenGenerator;
     }
 
-    public function register(Name $name, Email $email, CleanPassword $cleanPassword): ApiToken
+    public function register(string $name, string $email, string $cleanPassword): ApiToken
     {
+        $name = new Name($name);
+        $email = new Email($email);
+        $cleanPassword = new CleanPassword($cleanPassword);
+
         if ($this->userRepository->hasByEmail($email)) {
             throw new UserAlreadyExistsException();
         }

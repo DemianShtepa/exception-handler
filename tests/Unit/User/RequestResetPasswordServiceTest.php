@@ -12,7 +12,6 @@ use App\Domain\Repositories\ResetPasswordRequestRepository;
 use App\Domain\Repositories\UserRepository;
 use App\Domain\Services\Token\Interfaces\TokenGenerator;
 use App\Domain\Services\User\RequestResetPasswordService;
-use App\Domain\ValueObjects\User\Email;
 use DateInterval;
 use DateTimeImmutable;
 use Tests\TestCase;
@@ -44,7 +43,7 @@ class RequestResetPasswordServiceTest extends TestCase
             $this->eventDispatcher
         );
 
-        $returnedRequest = $this->requestResetPasswordService->requestResetPassword(new Email('some@mail.com'));
+        $returnedRequest = $this->requestResetPasswordService->requestResetPassword('some@mail.com');
 
         $this->assertEquals('new-link', $returnedRequest->getToken());
     }
@@ -65,7 +64,7 @@ class RequestResetPasswordServiceTest extends TestCase
             $this->eventDispatcher
         );
 
-        $returnedRequest = $this->requestResetPasswordService->requestResetPassword(new Email('some@mail.com'));
+        $returnedRequest = $this->requestResetPasswordService->requestResetPassword('some@mail.com');
 
         $this->assertEquals('link', $returnedRequest->getToken());
     }
@@ -86,7 +85,7 @@ class RequestResetPasswordServiceTest extends TestCase
             $this->eventDispatcher
         );
 
-        $returnedRequest = $this->requestResetPasswordService->requestResetPassword(new Email('some@mail.com'));
+        $returnedRequest = $this->requestResetPasswordService->requestResetPassword('some@mail.com');
 
         $this->assertEquals('new-link', $returnedRequest->getToken());
     }

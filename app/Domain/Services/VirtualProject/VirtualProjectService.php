@@ -6,6 +6,7 @@ namespace App\Domain\Services\VirtualProject;
 
 use App\Domain\Entities\User;
 use App\Domain\Entities\VirtualProject;
+use App\Domain\Exceptions\ForbiddenException;
 use App\Domain\Exceptions\User\UserAlreadySubscribedException;
 use App\Domain\Repositories\UserRepository;
 use App\Domain\Repositories\VirtualProjectRepository;
@@ -29,8 +30,9 @@ final class VirtualProjectService
         $this->userRepository = $userRepository;
     }
 
-    public function createVirtualProject(Name $name, User $user): VirtualProject
+    public function createVirtualProject(string $name, User $user): VirtualProject
     {
+        $name = new Name($name);
         $project = new VirtualProject(
             $name,
             $this->tokenGenerator->generate(),
@@ -56,5 +58,55 @@ final class VirtualProjectService
         $this->userRepository->save($user);
 
         return $user;
+    }
+
+    public function updateName(User $user, string $name, int $id): string
+    {
+        $project = $this->virtualProjectRepository->getById($id);
+
+        $this->checkUserPermission($user, $project);
+
+        $name = new Name($name);
+
+        $project->setName($name);
+
+        $this->virtualProjectRepository->save($project);
+
+        return $name->getValue();
+    }
+
+    public function changeInviteToken(User $user, int $id): string
+    {
+        $project = $this->virtualProjectRepository->getById($id);
+
+        $this->checkUserPermission($user, $project);
+
+        $token = $this->tokenGenerator->generate();
+        $project->setInviteToken($token);
+
+        $this->virtualProjectRepository->save($project);
+
+        return $token;
+    }
+
+    public function changePushToken(User $user, int $id): string
+    {
+        $project = $this->virtualProjectRepository->getById($id);
+
+        $this->checkUserPermission($user, $project);
+
+        $token = $this->tokenGenerator->generate();
+        $project->setPushToken($token);
+
+        $this->virtualProjectRepository->save($project);
+
+        return $token;
+    }
+
+    private function checkUserPermission(User $user, VirtualProject $virtualProject): void
+    {
+        if ($user !== $virtualProject->getOwner()) {
+            throw new ForbiddenException();
+        }
     }
 }

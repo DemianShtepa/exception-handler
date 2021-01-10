@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use App\Domain\Exceptions\NotFoundException;
+use App\Domain\Exceptions\ForbiddenException;
 use DomainException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
@@ -50,6 +51,11 @@ class Handler extends ExceptionHandler
         if ($e instanceof InvalidArgumentException) {
             $response['status_code'] = Response::HTTP_BAD_REQUEST;
             return new JsonResponse($response, Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($e instanceof ForbiddenException) {
+            $response['status_code'] = Response::HTTP_FORBIDDEN;
+            return new JsonResponse($response, Response::HTTP_FORBIDDEN);
         }
 
         if ($e instanceof DomainException) {

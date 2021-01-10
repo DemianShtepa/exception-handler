@@ -27,8 +27,9 @@ final class ResetPasswordService
         $this->passwordHasher = $passwordHasher;
     }
 
-    public function resetPassword(string $token, CleanPassword $cleanPassword): void
+    public function resetPassword(string $token, string $cleanPassword): void
     {
+        $cleanPassword = new CleanPassword($cleanPassword);
         $request = $this->resetPasswordRequestRepository->getByToken($token);
         if ($request->isExpiredComparedTo(new DateTimeImmutable())) {
             throw new ResetPasswordRequestExpiredException();

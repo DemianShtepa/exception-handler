@@ -12,5 +12,8 @@ interface VirtualProjectRepository
     /** @throws VirtualProjectNotFoundException */
     public function getByInviteToken(string $token): VirtualProject;
 
+    /** @throws VirtualProjectNotFoundException */
+    public function getById(int $id): VirtualProject;
+
     public function save(VirtualProject $virtualProject): void;
 }

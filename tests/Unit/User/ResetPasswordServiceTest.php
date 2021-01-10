@@ -10,7 +10,6 @@ use App\Domain\Repositories\ResetPasswordRequestRepository;
 use App\Domain\Repositories\UserRepository;
 use App\Domain\Services\User\Interfaces\PasswordHasher;
 use App\Domain\Services\User\ResetPasswordService;
-use App\Domain\ValueObjects\User\CleanPassword;
 use Tests\TestCase;
 
 final class ResetPasswordServiceTest extends TestCase
@@ -40,6 +39,6 @@ final class ResetPasswordServiceTest extends TestCase
 
         $this->expectException(ResetPasswordRequestExpiredException::class);
 
-        $this->resetPasswordService->resetPassword('some-token', new CleanPassword('some-password'));
+        $this->resetPasswordService->resetPassword('some-token', 'some-password');
     }
 }

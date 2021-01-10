@@ -32,8 +32,10 @@ final class Authenticator
         $this->tokenGenerator = $tokenGenerator;
     }
 
-    public function login(Email $email, CleanPassword $cleanPassword): ApiToken
+    public function login(string $email, string $cleanPassword): ApiToken
     {
+        $email = new Email($email);
+        $cleanPassword = new CleanPassword($cleanPassword);
         $user = $this->userRepository->getByEmail($email);
         $token = $user->getApiToken();
 

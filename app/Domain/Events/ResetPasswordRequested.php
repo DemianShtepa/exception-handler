@@ -17,14 +17,4 @@ final class ResetPasswordRequested implements Event
         $this->email = $email;
         $this->token = $token;
     }
-
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    public function getToken(): string
-    {
-        return $this->token;
-    }
 }

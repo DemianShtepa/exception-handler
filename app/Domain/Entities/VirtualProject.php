@@ -59,8 +59,18 @@ class VirtualProject
         return $this->createdAt;
     }
 
-    public function getSubscribers(): Collection
+    public function setName(Name $name): void
     {
-        return $this->subscribers;
+        $this->name = $name;
+    }
+
+    public function setPushToken(string $pushToken): void
+    {
+        $this->pushToken = $pushToken;
+    }
+
+    public function setInviteToken(string $inviteToken): void
+    {
+        $this->inviteToken = $inviteToken;
     }
 }

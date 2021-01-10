@@ -65,11 +65,6 @@ class User
         return $this->virtualProjects;
     }
 
-    public function addVirtualProject(VirtualProject $virtualProject): void
-    {
-        $this->virtualProjects->add($virtualProject);
-    }
-
     public function getSubscriptions(): Collection
     {
         return $this->subscriptions;

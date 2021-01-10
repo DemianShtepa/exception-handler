@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\User;
 
 use App\Domain\Services\User\RequestResetPasswordService;
-use App\Domain\ValueObjects\User\Email;
 use App\Infrastructure\Services\User\TransactionalResetPasswordService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,9 +23,9 @@ final class ResetPasswordController
         $this->resetPasswordService = $resetPasswordService;
     }
 
-    public function requestResetPassword(Request $request, string $email): JsonResponse
+    public function requestResetPassword(string $email): JsonResponse
     {
-        $this->requestResetPasswordService->requestResetPassword(new Email($email));
+        $this->requestResetPasswordService->requestResetPassword($email);
 
         return new JsonResponse(['message' => 'Reset password requested.']);
     }

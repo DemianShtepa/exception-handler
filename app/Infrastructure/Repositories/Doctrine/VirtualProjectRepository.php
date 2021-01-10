@@ -28,4 +28,16 @@ final class VirtualProjectRepository extends EntityRepository implements Virtual
         $this->_em->persist($virtualProject);
         $this->_em->flush();
     }
+
+    public function getById(int $id): VirtualProject
+    {
+        /** @var VirtualProject|null $project */
+        $project = $this->findOneBy(['id' => $id]);
+
+        if (!$project) {
+            throw new VirtualProjectNotFoundException();
+        }
+
+        return $project;
+    }
 }

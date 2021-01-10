@@ -9,5 +9,5 @@ use DomainException;
 final class InvalidCredentialsException extends DomainException
 {
     /** @var string  */
-    protected $message = 'Invalid credentials given were provided.';
+    protected $message = 'Invalid credentials were provided.';
 }

@@ -23,7 +23,7 @@ final class TransactionalResetPasswordService
     public function resetPassword(string $token, string $password): void
     {
         $this->entityManager->transactional(function () use ($token, $password) {
-            $this->resetPasswordService->resetPassword($token, new CleanPassword($password));
+            $this->resetPasswordService->resetPassword($token, $password);
         });
     }
 }

@@ -38,8 +38,9 @@ final class RequestResetPasswordService
         $this->eventDispatcher = $eventDispatcher;
     }
 
-    public function requestResetPassword(Email $email): ResetPasswordRequest
+    public function requestResetPassword(string $email): ResetPasswordRequest
     {
+        $email = new Email($email);
         $user = $this->userRepository->getByEmail($email);
 
         try {

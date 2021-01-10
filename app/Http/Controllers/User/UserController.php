@@ -14,8 +14,6 @@ final class UserController
     {
         /** @var User $user */
         $user = $request->user();
-        $array = $user->getSubscriptions()->toArray();
-        //dd($array);
         $data = [
             'name' => $user->getName()->getValue(),
             'email' => $user->getEmail()->getValue()

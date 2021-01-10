@@ -11,7 +11,6 @@ use App\Domain\Repositories\UserRepository;
 use App\Domain\Services\Token\Interfaces\TokenGenerator;
 use App\Domain\Services\User\Authenticator;
 use App\Domain\Services\User\Interfaces\PasswordHasher;
-use App\Domain\ValueObjects\User\CleanPassword;
 use App\Domain\ValueObjects\User\Email;
 use App\Domain\ValueObjects\User\Name;
 use DateInterval;
@@ -39,7 +38,7 @@ final class AuthenticatorTest extends TestCase
 
         $this->expectException(InvalidCredentialsException::class);
 
-        $token = $this->authenticator->login(new Email('mail@mail.com'), new CleanPassword('password'));
+        $token = $this->authenticator->login('mail@mail.com', 'password');
     }
 
     public function testReturnOldTokenIfNotExpired()
@@ -56,7 +55,7 @@ final class AuthenticatorTest extends TestCase
             ));
         $this->authenticator = new Authenticator($this->userRepository, $this->passwordHasher, $this->tokenGenerator);
 
-        $returnedToken = $this->authenticator->login(new Email('some@email.com'), new CleanPassword('password'));
+        $returnedToken = $this->authenticator->login('some@email.com', 'password');
 
         $this->assertEquals('some-token', $returnedToken->getToken());
     }
@@ -75,7 +74,7 @@ final class AuthenticatorTest extends TestCase
             ));
         $this->authenticator = new Authenticator($this->userRepository, $this->passwordHasher, $this->tokenGenerator);
 
-        $returnedToken = $this->authenticator->login(new Email('some@email.com'), new CleanPassword('password'));
+        $returnedToken = $this->authenticator->login('some@email.com', 'password');
 
         $this->assertEquals('new-token', $returnedToken->getToken());
     }

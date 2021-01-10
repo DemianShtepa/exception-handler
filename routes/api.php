@@ -14,7 +14,14 @@ Route::post('/request-reset-password/{email}', [ResetPasswordController::class, 
 Route::post('/reset-password/{token}', [ResetPasswordController::class, 'resetPassword']);
 Route::middleware('auth')->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
-    Route::get('/virtual-projects', [VirtualProjectController::class, 'getAll']);
-    Route::post('/virtual-projects', [VirtualProjectController::class, 'create']);
-    Route::post('/virtual-project/{inviteToken}/subscribe', [VirtualProjectController::class, 'subscribe']);
+    Route::group([
+        'prefix' => 'virtual-projects'
+    ], function () {
+        Route::get('/', [VirtualProjectController::class, 'getAll']);
+        Route::post('/', [VirtualProjectController::class, 'create']);
+        Route::post('/{inviteToken}/subscribe', [VirtualProjectController::class, 'subscribe']);
+        Route::put('/{virtualProjectId}/update-name', [VirtualProjectController::class, 'updateName']);
+        Route::put('/{virtualProjectId}/change-invite-token', [VirtualProjectController::class, 'changeInviteToken']);
+        Route::put('/{virtualProjectId}/change-push-token', [VirtualProjectController::class, 'changePushToken']);
+    });
 });

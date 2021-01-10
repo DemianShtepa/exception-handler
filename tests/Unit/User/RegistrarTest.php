@@ -10,9 +10,6 @@ use App\Domain\Repositories\UserRepository;
 use App\Domain\Services\Token\Interfaces\TokenGenerator;
 use App\Domain\Services\User\Interfaces\PasswordHasher;
 use App\Domain\Services\User\Registrar;
-use App\Domain\ValueObjects\User\CleanPassword;
-use App\Domain\ValueObjects\User\Email;
-use App\Domain\ValueObjects\User\Name;
 use PHPUnit\Framework\TestCase;
 
 final class RegistrarTest extends TestCase
@@ -38,9 +35,9 @@ final class RegistrarTest extends TestCase
         $this->expectException(UserAlreadyExistsException::class);
 
         $token = $this->registrar->register(
-            new Name('testname'),
-            new Email('test@test.com'),
-            new CleanPassword('password')
+            'testname',
+            'test@test.com',
+            'password'
         );
     }
 
@@ -52,9 +49,9 @@ final class RegistrarTest extends TestCase
         $this->registrar = new Registrar($this->userRepository, $this->passwordHasher, $this->tokenGenerator);
 
         $token = $this->registrar->register(
-            new Name('testname'),
-            new Email('test@test.com'),
-            new CleanPassword('password')
+            'testname',
+            'test@test.com',
+            'password'
         );
 
         $this->assertInstanceOf(ApiToken::class, $token);
