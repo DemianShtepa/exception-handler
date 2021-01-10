@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Services\User;
 
+use App\Domain\Services\User\Interfaces\ResetPasswordService as ResetPasswordServiceInterface;
 use App\Domain\Services\User\ResetPasswordService;
-use App\Domain\ValueObjects\User\CleanPassword;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class TransactionalResetPasswordService
+final class TransactionalResetPasswordService implements ResetPasswordServiceInterface
 {
     private EntityManagerInterface $entityManager;
 

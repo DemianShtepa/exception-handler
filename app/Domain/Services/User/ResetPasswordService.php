@@ -8,10 +8,11 @@ use App\Domain\Exceptions\ResetPasswordRequest\ResetPasswordRequestExpiredExcept
 use App\Domain\Repositories\ResetPasswordRequestRepository;
 use App\Domain\Repositories\UserRepository;
 use App\Domain\Services\User\Interfaces\PasswordHasher;
+use App\Domain\Services\User\Interfaces\ResetPasswordService as ResetPasswordServiceInterface;
 use App\Domain\ValueObjects\User\CleanPassword;
 use DateTimeImmutable;
 
-final class ResetPasswordService
+final class ResetPasswordService implements ResetPasswordServiceInterface
 {
     private ResetPasswordRequestRepository $resetPasswordRequestRepository;
     private UserRepository $userRepository;

@@ -3,6 +3,7 @@
 use App\Providers\EventDispatcherServiceProvider;
 use App\Providers\PasswordHasherProvider;
 use App\Providers\RepositoryServiceProvider;
+use App\Providers\ResetPasswordServiceProvider;
 use App\Providers\TokenGeneratorProvider;
 use App\Providers\TransactionServiceProvider;
 
@@ -185,7 +186,8 @@ return [
         RepositoryServiceProvider::class,
         PasswordHasherProvider::class,
         TokenGeneratorProvider::class,
-        EventDispatcherServiceProvider::class
+        EventDispatcherServiceProvider::class,
+        ResetPasswordServiceProvider::class
     ],
 
     /*
