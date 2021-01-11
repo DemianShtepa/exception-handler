@@ -9,13 +9,13 @@ use App\Domain\Exceptions\ResetPasswordRequest\ResetPasswordRequestExpiredExcept
 use App\Domain\Repositories\ResetPasswordRequestRepository;
 use App\Domain\Repositories\UserRepository;
 use App\Domain\Services\User\Interfaces\PasswordHasher;
-use App\Domain\Services\User\ResetPasswordService;
+use App\Domain\Services\User\PasswordResetter;
 use Tests\TestCase;
 
 final class ResetPasswordServiceTest extends TestCase
 {
     private ResetPasswordRequestRepository $resetPasswordRequestRepository;
-    private ResetPasswordService $resetPasswordService;
+    private PasswordResetter $resetPasswordService;
     private PasswordHasher $passwordHasher;
     private UserRepository $userRepository;
 
@@ -31,7 +31,7 @@ final class ResetPasswordServiceTest extends TestCase
         $request = $this->createMock(ResetPasswordRequest::class);
         $request->method('isExpiredComparedTo')->willReturn(true);
         $this->resetPasswordRequestRepository->method('getByToken')->willReturn($request);
-        $this->resetPasswordService = new ResetPasswordService(
+        $this->resetPasswordService = new PasswordResetter(
             $this->resetPasswordRequestRepository,
             $this->userRepository,
             $this->passwordHasher

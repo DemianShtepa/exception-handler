@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Services\User;
 
-use App\Domain\Services\User\Interfaces\ResetPasswordService as ResetPasswordServiceInterface;
-use App\Domain\Services\User\ResetPasswordService;
+use App\Domain\Services\User\Interfaces\PasswordResetter as ResetPasswordServiceInterface;
+use App\Domain\Services\User\PasswordResetter;
 use Doctrine\ORM\EntityManagerInterface;
 
-final class TransactionalResetPasswordService implements ResetPasswordServiceInterface
+final class TransactionalPasswordResetter implements ResetPasswordServiceInterface
 {
     private EntityManagerInterface $entityManager;
 
-    private ResetPasswordService $resetPasswordService;
+    private PasswordResetter $resetPasswordService;
 
-    public function __construct(EntityManagerInterface $entityManager, ResetPasswordService $resetPasswordService)
+    public function __construct(EntityManagerInterface $entityManager, PasswordResetter $resetPasswordService)
     {
         $this->entityManager = $entityManager;
         $this->resetPasswordService = $resetPasswordService;

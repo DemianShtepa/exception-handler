@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\User;
 
 use App\Domain\Services\User\RequestResetPasswordService;
-use App\Domain\Services\User\Interfaces\ResetPasswordService;
+use App\Domain\Services\User\Interfaces\PasswordResetter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -13,10 +13,10 @@ final class ResetPasswordController
 {
     private RequestResetPasswordService $requestResetPasswordService;
 
-    private ResetPasswordService $resetPasswordService;
+    private PasswordResetter $resetPasswordService;
 
     public function __construct(
-        ResetPasswordService $resetPasswordService,
+        PasswordResetter $resetPasswordService,
         RequestResetPasswordService $requestResetPasswordService
     ) {
         $this->requestResetPasswordService = $requestResetPasswordService;

@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use App\Domain\Services\User\Interfaces\ResetPasswordService as ResetPasswordServiceInterface;
-use App\Domain\Services\User\ResetPasswordService;
-use App\Infrastructure\Services\User\TransactionalResetPasswordService;
+use App\Domain\Services\User\Interfaces\PasswordResetter as PasswordResetterInterface;
+use App\Domain\Services\User\PasswordResetter;
+use App\Infrastructure\Services\User\TransactionalPasswordResetter;
 use Illuminate\Support\ServiceProvider;
 
 class ResetPasswordServiceProvider extends ServiceProvider
@@ -16,8 +16,8 @@ class ResetPasswordServiceProvider extends ServiceProvider
 
     private function registerResetPasswordService(): void
     {
-        $this->app->bind(ResetPasswordServiceInterface::class, function ($app) {
-            return new TransactionalResetPasswordService($app->get('em'), $app->make(ResetPasswordService::class));
+        $this->app->bind(PasswordResetterInterface::class, function ($app) {
+            return new TransactionalPasswordResetter($app->get('em'), $app->make(PasswordResetter::class));
         });
     }
 }
