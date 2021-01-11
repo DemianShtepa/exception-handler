@@ -13,31 +13,14 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    /**
-     * A list of the exception types that are not reported.
-     *
-     * @var array
-     */
     protected $dontReport = [
-        //
+        InvalidArgumentException::class,
+        ForbiddenException::class,
+        DomainException::class,
+        NotFoundException::class
     ];
 
-    /**
-     * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var array
-     */
-    protected $dontFlash = [
-        'password',
-        'password_confirmation',
-    ];
-
-    /**
-     * Register the exception handling callbacks for the application.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
         $this->reportable(function (Throwable $e) {
             //

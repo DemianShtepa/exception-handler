@@ -74,4 +74,11 @@ class User
     {
         $this->subscriptions->add($virtualProject);
     }
+
+    public function unsubscribe(VirtualProject $virtualProject): void
+    {
+        //dd($this->subscriptions->toArray(), $this->subscriptions->remove($virtualProject->getId()));
+        $this->subscriptions->removeElement($virtualProject);
+        //$virtualProject->removeSubscriber($this);
+    }
 }

@@ -10,6 +10,7 @@ use App\Domain\Exceptions\User\UserNotFoundException;
 use App\Domain\Repositories\UserRepository as UserRepositoryInterface;
 use App\Domain\ValueObjects\User\Email;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 final class UserRepository extends EntityRepository implements UserRepositoryInterface
 {

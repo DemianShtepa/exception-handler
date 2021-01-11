@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [VirtualProjectController::class, 'getAll']);
         Route::post('/', [VirtualProjectController::class, 'create']);
         Route::post('/{inviteToken}/subscribe', [VirtualProjectController::class, 'subscribe']);
+        Route::delete('/{virtualProjectId}/unsubscribe', [VirtualProjectController::class, 'unsubscribe']);
         Route::put('/{virtualProjectId}/update-name', [VirtualProjectController::class, 'updateName']);
         Route::put('/{virtualProjectId}/change-invite-token', [VirtualProjectController::class, 'changeInviteToken']);
         Route::put('/{virtualProjectId}/change-push-token', [VirtualProjectController::class, 'changePushToken']);

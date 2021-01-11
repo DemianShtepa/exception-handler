@@ -73,4 +73,9 @@ class VirtualProject
     {
         $this->inviteToken = $inviteToken;
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

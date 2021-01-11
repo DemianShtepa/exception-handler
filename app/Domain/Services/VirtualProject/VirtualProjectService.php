@@ -7,7 +7,6 @@ namespace App\Domain\Services\VirtualProject;
 use App\Domain\Entities\User;
 use App\Domain\Entities\VirtualProject;
 use App\Domain\Exceptions\ForbiddenException;
-use App\Domain\Exceptions\User\UserAlreadySubscribedException;
 use App\Domain\Repositories\UserRepository;
 use App\Domain\Repositories\VirtualProjectRepository;
 use App\Domain\Services\Token\Interfaces\TokenGenerator;
@@ -44,20 +43,6 @@ final class VirtualProjectService
         $this->virtualProjectRepository->save($project);
 
         return $project;
-    }
-
-    public function subscribe(User $user, string $inviteToken): User
-    {
-        $request = $this->virtualProjectRepository->getByInviteToken($inviteToken);
-
-        if ($this->userRepository->isUserSubscribedTo($user, $request)) {
-            throw new UserAlreadySubscribedException();
-        }
-
-        $user->subscribe($request);
-        $this->userRepository->save($user);
-
-        return $user;
     }
 
     public function updateName(User $user, string $name, int $id): string
