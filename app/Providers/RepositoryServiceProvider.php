@@ -3,14 +3,17 @@
 namespace App\Providers;
 
 use App\Domain\Entities\ApiToken;
+use App\Domain\Entities\Exception;
 use App\Domain\Entities\ResetPasswordRequest;
 use App\Domain\Entities\User;
 use App\Domain\Entities\VirtualProject;
 use App\Domain\Repositories\ApiTokenRepository as ApiTokenRepositoryInterface;
+use App\Domain\Repositories\ExceptionRepository as ExceptionRepositoryInterface;
 use App\Domain\Repositories\ResetPasswordRequestRepository as ResetPasswordRequestRepositoryInterface;
 use App\Domain\Repositories\UserRepository as UserRepositoryInterface;
 use App\Domain\Repositories\VirtualProjectRepository as VirtualProjectRepositoryInterface;
 use App\Infrastructure\Repositories\Doctrine\ApiTokenRepository;
+use App\Infrastructure\Repositories\Doctrine\ExceptionRepository;
 use App\Infrastructure\Repositories\Doctrine\ResetPasswordRequestRepository;
 use App\Infrastructure\Repositories\Doctrine\UserRepository;
 use App\Infrastructure\Repositories\Doctrine\VirtualProjectRepository;
@@ -24,6 +27,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->registerApiTokenRepository();
         $this->registerResetPasswordRequestRepository();
         $this->registerVirtualProjectRepository();
+        $this->registerExceptionRepository();
     }
 
     private function registerUserRepository(): void
@@ -56,6 +60,16 @@ class RepositoryServiceProvider extends ServiceProvider
             return new VirtualProjectRepository(
                 $app['em'],
                 $app['em']->getClassMetaData(VirtualProject::class)
+            );
+        });
+    }
+
+    private function registerExceptionRepository(): void
+    {
+        $this->app->bind(ExceptionRepositoryInterface::class, function ($app) {
+            return new ExceptionRepository(
+                $app['em'],
+                $app['em']->getClassMetaData(Exception::class)
             );
         });
     }

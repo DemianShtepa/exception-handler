@@ -30,3 +30,7 @@ App\Domain\Entities\VirtualProject:
     subscribers:
       targetEntity: User
       mappedBy: groups
+  oneToMany:
+    exceptions:
+      targetEntity: Exception
+      mappedBy: user

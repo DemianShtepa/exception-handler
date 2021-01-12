@@ -1,0 +1,7 @@
+App\Domain\ValueObjects\Exception\Stacktrace:
+  type: embeddable
+  fields:
+    value:
+      type: text
+      length: 65535
+      column: stacktrace

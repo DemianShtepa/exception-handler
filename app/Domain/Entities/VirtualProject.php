@@ -18,6 +18,7 @@ class VirtualProject
     private DateTimeImmutable $createdAt;
     private User $owner;
     private Collection $subscribers;
+    private Collection $exceptions;
 
     public function __construct(
         Name $name,
@@ -32,6 +33,7 @@ class VirtualProject
         $this->createdAt = $createdAt;
         $this->owner = $owner;
         $this->subscribers = new ArrayCollection();
+        $this->exceptions = new ArrayCollection();
     }
 
     public function getOwner(): User

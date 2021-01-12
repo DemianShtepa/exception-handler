@@ -1,5 +1,7 @@
 <?php
 
+use App\Infrastructure\Types\StatusType;
+
 return [
 
     /*
@@ -110,6 +112,7 @@ return [
     |--------------------------------------------------------------------------
     */
     'custom_types'               => [
+        'exception_status' => StatusType::class
     ],
     /*
     |--------------------------------------------------------------------------

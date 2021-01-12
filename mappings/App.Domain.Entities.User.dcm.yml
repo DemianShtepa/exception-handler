@@ -20,11 +20,14 @@ App\Domain\Entities\User:
     apiToken:
       targetEntity: ApiToken
       mappedBy: user
-      cascade: ["persist", "remove"]
+      cascade: [ "persist", "remove" ]
   oneToMany:
     virtualProjects:
       targetEntity: VirtualProject
       mappedBy: owner
+    assignedExceptions:
+      targetEntity: Exception
+      mappedBy: assigned_user
   manyToMany:
     subscriptions:
       targetEntity: VirtualProject

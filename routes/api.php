@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Exception\ExceptionController;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\User\ResetPasswordController;
@@ -25,4 +26,12 @@ Route::middleware('auth')->group(function () {
         Route::put('/{virtualProjectId}/change-invite-token', [VirtualProjectController::class, 'changeInviteToken']);
         Route::put('/{virtualProjectId}/change-push-token', [VirtualProjectController::class, 'changePushToken']);
     });
+    Route::group([
+        'prefix' => 'exceptions'
+    ], function () {
+        Route::put('/{exceptionId}/unhandle', [ExceptionController::class, 'setToUnhandled']);
+        Route::put('/{exceptionId}/handle', [ExceptionController::class, 'setToHandled']);
+        Route::put('/{exceptionId}/solve', [ExceptionController::class, 'setToSolved']);
+    });
 });
+Route::post('/exceptions/{pushToken}', [ExceptionController::class, 'create']);

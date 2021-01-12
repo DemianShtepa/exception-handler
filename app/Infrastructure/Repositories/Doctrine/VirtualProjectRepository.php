@@ -40,4 +40,16 @@ final class VirtualProjectRepository extends EntityRepository implements Virtual
 
         return $project;
     }
+
+    public function getByPushToken(string $token): VirtualProject
+    {
+        /** @var VirtualProject|null $project */
+        $project = $this->findOneBy(['pushToken' => $token]);
+
+        if (!$project) {
+            throw new VirtualProjectNotFoundException();
+        }
+
+        return $project;
+    }
 }

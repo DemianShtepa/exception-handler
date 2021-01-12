@@ -18,6 +18,7 @@ class User
     private ApiToken $apiToken;
     private Collection $virtualProjects;
     private Collection $subscriptions;
+    private Collection $assignedExceptions;
 
     public function __construct(Name $name, Email $email, string $password, ApiToken $apiToken)
     {
@@ -28,6 +29,7 @@ class User
         $this->apiToken->setUser($this);
         $this->virtualProjects = new ArrayCollection();
         $this->subscriptions = new ArrayCollection();
+        $this->assignedExceptions = new ArrayCollection();
     }
 
     public function getApiToken(): ApiToken
@@ -77,8 +79,6 @@ class User
 
     public function unsubscribe(VirtualProject $virtualProject): void
     {
-        //dd($this->subscriptions->toArray(), $this->subscriptions->remove($virtualProject->getId()));
         $this->subscriptions->removeElement($virtualProject);
-        //$virtualProject->removeSubscriber($this);
     }
 }
